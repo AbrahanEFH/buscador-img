@@ -40,7 +40,7 @@ function mostrarAlerta(mensaje) {
 }
 
 function buscarImagenes(termino) {
-    const key = '39747926-dd78a22f07dfb931847a676ec'
+    const key = //'tu pai key'
     const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=50`
 
     // Consultando la API
