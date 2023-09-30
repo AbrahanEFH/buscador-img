@@ -53,4 +53,19 @@ function buscarImagenes(termino) {
 
 function mostrarImagenes(imagenes) {
     console.log(imagenes)
+
+    // Eliminamos los resultados previos
+    while (resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
+    }
+
+    // Iterar sobre el arreglo de imagenes y cosntruir el HTML
+    imagenes.forEach(imagen => {
+        const { previewURL, largeImageURL, likes, views } = imagen;
+
+        resultado.innerHTML += `
+        
+            <img class="w-full" src="${previewURL}">
+        `
+    })
 }
