@@ -5,6 +5,7 @@ const paginacionDiv = document.querySelector('#paginacion');
 const resgistroPorPagina = 40;
 let totalPaginas;
 let iterador;
+let paginaActual = 1;
 
 window.onload = () => {
     formulario.addEventListener('submit', validarFormulario);
@@ -21,7 +22,7 @@ function validarFormulario(e) {
         return;
     }
 
-    buscarImagenes(terminoBusqueda);
+    buscarImagenes();
 }
 
 function mostrarAlerta(mensaje) {
@@ -44,9 +45,13 @@ function mostrarAlerta(mensaje) {
     }
 }
 
-function buscarImagenes(termino) {
-    const key = '39747926-dd78a22f07dfb931847a676ec'
-    const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${resgistroPorPagina}`
+function buscarImagenes() {
+
+    const termino = document.querySelector('#termino').value;
+
+
+    //const key = 'tu api key'
+    const url = `https://pixabay.com/api/?key=${key}&q=${termino}&per_page=${resgistroPorPagina}&page=${paginaActual}`;
 
     // Consultando la API
     fetch(url)
@@ -99,6 +104,11 @@ function mostrarImagenes(imagenes) {
         `
     })
 
+    //Limpiar el paginador previo
+    while (paginacionDiv.firstChild) {
+        paginacionDiv.removeChild(paginacionDiv.firstChild)
+    }
+
     imprimirPaginador()
 }
 
@@ -114,7 +124,13 @@ function imprimirPaginador() {
         boton.href = '#';
         boton.dataset.pagina = value;
         boton.textContent = value;
-        boton.classList.add('siguiente', 'bg-yellow-400', 'px-4', 'py-1', 'mr-2', 'font-bold', 'mb-10', 'uppercase', 'rounded');
+        boton.classList.add('siguiente', 'bg-yellow-400', 'px-4', 'py-1', 'mr-2', 'font-bold', 'mb-3', 'rounded');
+
+        boton.onclick = () => {
+            paginaActual = value;
+
+            buscarImagenes();
+        }
 
         paginacionDiv.appendChild(boton);
     }
